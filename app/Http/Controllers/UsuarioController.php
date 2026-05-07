@@ -50,4 +50,27 @@ public function update(Request $request, $id)
 
         return response()->json(['mensaje'=>'Usuario eliminado']);
     }
+
+    public function login(Request $request)
+{
+    $usuario = \App\Models\Usuario::where('correo', $request->correo)->first();
+
+    if (!$usuario) {
+        return response()->json(['error' => 'Credenciales incorrectas'], 401);
+    }
+
+    $passwordValido = false;
+    try {
+        $passwordValido = \Illuminate\Support\Facades\Hash::check($request->password, $usuario->password);
+    } catch (\Exception $e) {
+        $passwordValido = ($request->password === $usuario->password);
+    }
+
+    if (!$passwordValido) {
+        return response()->json(['error' => 'Credenciales incorrectas'], 401);
+    }
+
+    return response()->json($usuario);
+}
+
 }

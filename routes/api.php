@@ -76,6 +76,9 @@ Route::delete('/detalles_pedidos/{id}', [DetallePedidoController::class, 'destro
 Route::get('/usuarios/{id}/solicitudes', [SolicitudServicioController::class, 'porUsuario']);
 Route::put('/solicitudes/{id}/cancelar', [SolicitudServicioController::class, 'cancelar']);
 
+Route::post('/login', [App\Http\Controllers\UsuarioController::class, 'login']);
+
+
 
 
 /*
